@@ -1,14 +1,31 @@
+'use client'
+
 import { Search } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 interface SearchFieldProps {
-    value: string;
-    onChange: (value:string)=>void;
     placeholder: string;
     size: "short" | "medium" | "default";
     
 }
 
-export default function SearchField({ value, onChange, placeholder, size}: SearchFieldProps) {
+export default function SearchField({placeholder, size}: SearchFieldProps) {
     
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const [query,setQuery] = useState(searchParams.get("query")|| "");
+    
+    useEffect(()=>{
+        if(query.length>0){
+            query.trim()
+            router.push(`/?query=${query}`)
+        }else{
+            router.replace("/")
+        }
+        
+        console.log(query)
+    },[query,router])
 
     const sizeVariants = {
         "short": "w-32",
@@ -27,8 +44,7 @@ export default function SearchField({ value, onChange, placeholder, size}: Searc
             <input 
             className={`w-full outline-none`} 
             placeholder={placeholder}
-            onChange={(e)=>{onChange(e.target.value)}}
-            value={value}
+            onChange={(e)=>setQuery(e.target.value)}
             />
 
             <Search 

@@ -8,18 +8,18 @@ import  Loader  from "./components/ui/loader";
 import  SearchField from "./components/ui/searchField";
 import { useSearchParams } from "next/navigation";
 
+
+
 export default function Page() {
-
-
-    const searchParams = useSearchParams();
-    const [query, setQuery] = useState(searchParams.get("query") || "")
+    const searchParams = useSearchParams()
     const [products, setProducts] = useState<Product[]>([])
     const [isLoading, setLoading] = useState(true)
+    const query = searchParams.get("query")|| ""
+
 
     useEffect(()=>{
       async function getProducts() {
-        if(query.length>0) {
-          query.trim();
+        if(query) {
           try {
             const res = await fetch(`/api/products/search?query=${query}`)
             const data: Product[] = await res.json()
@@ -57,7 +57,7 @@ export default function Page() {
       <>
           <Header isHome={true}/>
           <div className="flex flex-col items-center justify-center">
-                <SearchField value={query} onChange={setQuery} placeholder={"Encontre o que você ama."} size={"default"}/>
+                <SearchField placeholder={"Encontre o que você ama."} size={"default"}/>
                 <h1 className="text-3xl text-center mt-10 mb-10 font-bold">Destaques do dia</h1>
           </div>
           
