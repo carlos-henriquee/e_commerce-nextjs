@@ -2,12 +2,11 @@
 import { useEffect, useState } from "react";
 import { Product } from "./types/Product";
 import Image from "next/image";
-import Header from "./components/header";
+import Header from "./components/ui/header";
 import Link from "next/link";
 import  Loader  from "./components/ui/loader";
 import  SearchField from "./components/ui/searchField";
 import { useSearchParams } from "next/navigation";
-
 
 
 export default function Page() {

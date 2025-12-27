@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { fetchProductById } from "@/app/lib/fetchProductById";
 import Image from "next/image";
-import Header from "@/app/components/header";
-import ReadMoreText from "@/app/components/readmore";
+import Header from "@/app/components/ui/header";
+import ReadMoreText from "@/app/components/ui/readmore";
+
 
 
 interface ProductPageParams {
@@ -13,7 +14,7 @@ interface ProductPageParams {
 
 
 export default async function ProductPage({params}:ProductPageParams) {
-    const id = Number((await params).productId)
+    const id = Number(params.productId)
 
 
     if(Number.isNaN(id)) {
@@ -28,29 +29,76 @@ export default async function ProductPage({params}:ProductPageParams) {
     return(
         <>
         <Header isHome={false}/>
-        
-        <h1 className="text-3xl font-semibold ml-10 mt-5">Página do Produto</h1>
-        
-        <div 
-        className="bg-orange-500 h-80 w-20 absolute mt-20 ml-10"
-        ></div>
-        <div className="bg-orange-500 rounded-lg flex flex-col h-fit p-5 w-[34rem] absolute ml-[50rem] mt-[-3rem]">
-            <h1 className="text-2xl font-semibold mx-10 my-10">{product.name}</h1>
-            <p className="ml-10 text-3xl">R${product.price.toFixed(2)}</p>
-            <h2 className="font-semibold ml-10 my-5">Descrição</h2>
-            <ReadMoreText style="mx-10 mb-5 text-xl" text={product.description} />
-            <button className="p-5 bg-white text-black   w-80 rounded-lg mx-auto mt-5 ">Adicionar ao carrinho</button>
-            <button className="p-5 bg-red-500 hover:shadow-2xl hover:shadow-red-400 text-white w-80 rounded-lg mx-auto mt-5 ">Comprar</button>
-        </div>
-        
-        <div 
-        className="ml-40 mt-12 w-[36rem] h-[30rem] flex items-center justify-center
-        rounded-lg border border-black"
-         >
+        <h1 className="text-3xl font-semibold ml-10 mt-5 ">Página do Produto</h1>
+        <main className="mt-3 flex justify-center">
+            <div className=" flex w-[60rem] h-[30rem]">
+                <div 
+                className="w-1/2 
+                flex items-center justify-center
+                rounded-lg border border-black"
+                >
+                    
+                    <Image 
+                    width={300} 
+                    height={300} 
+                    alt = "Imagem do produto" 
+                    src={product.image_url} 
+                    className="m-auto"
+                    />
+                    
+                </div>
+                <div 
+                className="w-1/2 flex items-center 
+                justify-center rounded-lg"
+                >
+                    <div 
+                    className="bg-blue-500 h-[28rem] 
+                    w-[25rem] p-5 flex flex-col rounded-sm" 
+                    >
+                        
+                        {product.name.length>40? (
+                            <h1 
+                            className="text-2xl"
+                            >
+                                {product.name.slice(0,40)}...
+                            </h1>
+                        ):(
+                            <h1 
+                            className="text-2xl"
+                            >
+                                {product.name}
+                            </h1>
+                        )}
+                        
+                            <p className="text-2xl mt-5">
+                                R${product.price}
+                            </p>
+                            <div>
+                                <ReadMoreText 
+                                productName={product.name}
+                                text={product.description} 
+                                style="my-12"
+                                />
+                            </div>
+                            <button className="bg-gray-500 my-5 p-2 rounded-sm hover:bg-black hover:text-white">
+                                Adicionar ao Carrinho
+                            </button>
+
+                            <button className="bg-gray-500 p-2 rounded-sm hover:bg-red-500 hover:text-white  ">
+                                Comprar
+                            </button>
+
+                    </div>
+                    
+
+                </div>
             
-            <Image width={300} height={300} alt = "Imagem do produto" src={product.image_url} className="m-auto"/>
+                
+            </div>
             
-        </div>
+
+        </main>
+        
 
         
         </>
