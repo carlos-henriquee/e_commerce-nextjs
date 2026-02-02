@@ -18,9 +18,9 @@ export default function Header({isHome}:HeaderProps) {
                     <ChevronLeftIcon onClick={()=>router.back()} color="white" size={48} className="cursor-pointer"/>
                     
                     <div className="ml-auto">
-                        <Link className="mr-5 hover:text-white" href="/">Carrinho</Link>
-                        <Link className="mr-5 hover:text-white" href="/">Entrar</Link>
-                        <Link className="mr-5 hover:text-white" href="/">Cadastrar-se</Link>
+                        <Link className="mr-5 hover:text-white" href="/pages/cart">Carrinho</Link>
+                        <Link className="mr-5 hover:text-white" href="/pages/login">Entrar</Link>
+                        <Link className="mr-5 hover:text-white" href="/pages/signup">Cadastrar-se</Link>
                     </div>
                     
                 </header>
@@ -29,10 +29,10 @@ export default function Header({isHome}:HeaderProps) {
 
 
     return (
-        <header className="flex items-center justify-end h-12 bg-orange-500 font-bold">
-            <Link className="mr-5 hover:text-white" href="/">Carrinho</Link>
-            <Link className="mr-5 hover:text-white" href="/">Entrar</Link>
-            <Link className="mr-5 hover:text-white" href="/">Cadastrar-se</Link>
+        <header className="flex items-center justify-end max-md:justify-center h-12 bg-orange-500 font-bold">
+            <Link className="mx-2 md:mr-5 hover:text-white" href="/pages/cart">Carrinho</Link>
+            <Link className="mx-2 md:mr-5 hover:text-white" href="/pages/login">Entrar</Link>
+            <Link className="mx-2 md:mr-5 hover:text-white" href="/pages/signup">Cadastrar-se</Link>
         </header>
     )
 }

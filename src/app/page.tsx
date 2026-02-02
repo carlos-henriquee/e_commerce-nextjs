@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { Product } from "./types/Product";
+import { Product } from "./models/Product";
 import Image from "next/image";
 import Header from "./components/ui/header";
 import Link from "next/link";
@@ -60,11 +60,11 @@ export default function Page() {
                 <h1 className="text-3xl text-center mt-10 mb-10 font-bold">Destaques do dia</h1>
           </div>
           
-          <div className="grid grid-cols-5">
+          <div className="grid grid-cols-5 max-xl:grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-2">
           
             {products && products.map((item)=>(
               
-                <Link href={`/products/${item.id}`} 
+                <Link href={`/pages/products/${item.id}`} 
                 onClick={()=>setLoading(true)}
                 className="w-50 h-68  bg-orange-500 text-white 
                 cursor-pointer hover:scale-[1.1] ease-in-out 

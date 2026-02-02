@@ -1,8 +1,10 @@
+
 import { notFound } from "next/navigation";
-import { fetchProductById } from "@/app/lib/fetchProductById";
+import { fetchProductById } from "@/app/utils/fetchProductById";
 import Image from "next/image";
 import Header from "@/app/components/ui/header";
-import ReadMoreText from "@/app/components/ui/readmore";
+import ReadMoreText from "../../../components/ui/readmore";
+import AddToCartButton from "@/app/components/ui/AddToCartButton";
 
 
 
@@ -14,18 +16,21 @@ interface ProductPageParams {
 
 
 export default async function ProductPage({params}:ProductPageParams) {
-    const id = Number(params.productId)
+    const productParams = await params
 
+    const id =  Number(productParams.productId)
 
+    
     if(Number.isNaN(id)) {
-        return notFound()
-    }
-
-    const product = await fetchProductById(id)
+       return notFound()
+    } 
+    const product = await fetchProductById(String(id))
 
     if(!product) {
         return notFound()
     }
+    console.log(product.description.length)
+    console.log(product.name.length)
     return(
         <>
         <Header isHome={false}/>
@@ -57,7 +62,7 @@ export default async function ProductPage({params}:ProductPageParams) {
                     >
                         
                         {product.name.length>40? (
-                            <h1 
+                            <h1  
                             className="text-2xl"
                             >
                                 {product.name.slice(0,40)}...
@@ -73,18 +78,17 @@ export default async function ProductPage({params}:ProductPageParams) {
                             <p className="text-2xl mt-5">
                                 R${product.price}
                             </p>
-                            <div>
-                                <ReadMoreText 
-                                productName={product.name}
-                                text={product.description} 
-                                style="my-12"
-                                />
-                            </div>
-                            <button className="bg-gray-500 my-5 p-2 rounded-sm hover:bg-black hover:text-white">
-                                Adicionar ao Carrinho
-                            </button>
+                                <ReadMoreText
+                                    productName={product.name}
+                                    productDescription={product.description}
+                                    style="mt-5 flex flex-col"
+                                /> 
+                             <AddToCartButton product={product}/> 
 
-                            <button className="bg-gray-500 p-2 rounded-sm hover:bg-red-500 hover:text-white  ">
+                            <button 
+                            className="bg-gray-500 p-2 rounded-sm 
+                            hover:bg-red-500 hover:text-white"
+                            >
                                 Comprar
                             </button>
 

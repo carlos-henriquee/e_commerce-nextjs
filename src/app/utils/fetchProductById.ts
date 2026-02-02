@@ -1,9 +1,9 @@
-import {pool} from './mysql';
+import {pool} from '../lib/mysql';
 import { RowDataPacket } from "mysql2";
-import type { Product } from "@/app/types/Product";
+import type { Product } from "@/app/models/Product";
 
 
-export async function fetchProductById(id:number): Promise<Product | null> {
+export async function fetchProductById(id:number|string): Promise<Product | null> {
   
   if(Number.isNaN(id)) {
     return null

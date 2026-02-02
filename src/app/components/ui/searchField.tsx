@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 interface SearchFieldProps {
     placeholder: string;
-    size: "short" | "medium" | "default";
+    size: "short" | "medium" | "default" ;
     
 }
 
@@ -24,14 +24,14 @@ export default function SearchField({placeholder, size}: SearchFieldProps) {
             router.replace("/")
         }
         
-        console.log(query)
     },[query,router])
-
-    const sizeVariants = {
-        "short": "w-32",
-        "medium": "w-60",
-        "default": "w-[50rem]"
-    }
+   
+        const sizeVariants = {
+            "short": "w-32",
+            "medium": "w-60",
+            "default": "w-1/2",
+        }
+        
 
      return (
         <form 
