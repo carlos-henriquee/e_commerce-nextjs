@@ -29,12 +29,13 @@ export default async function ProductPage({params}:ProductPageParams) {
     if(!product) {
         return notFound()
     }
-    console.log(product.description.length)
-    console.log(product.name.length)
     return(
         <>
         <Header isHome={false}/>
-        <h1 className="text-3xl font-semibold ml-10 mt-5 ">Página do Produto</h1>
+        <h1 className="text-3xl font-semibold ml-10 mt-5 ">
+            Página do Produto
+        </h1>
+        
         <main className="mt-3 flex justify-center">
             <div className=" flex w-[60rem] h-[30rem]">
                 <div 

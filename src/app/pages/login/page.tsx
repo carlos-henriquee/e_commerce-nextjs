@@ -58,7 +58,12 @@ export default function SignUpPage() {
             onChange={(e)=>setLoginFormData({...loginFormData, password:e.target.value})} 
             className="mt-5 h-8 w-64"
             />
-            <input type="submit" value="Entrar" className="cursor-pointer justify-self-end bg-red-500 mb-3 p-2 mt-3 rounded-sm"/>
+            <input 
+            type="submit" 
+            value="Entrar" 
+            className="cursor-pointer justify-self-end
+             bg-red-500 mb-3 p-2 mt-3 rounded-sm"
+            />
             {alertMessage&&(
                 <p className="text-red-500 font-bold">{alertMessage}</p>
             )}

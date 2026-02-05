@@ -3,6 +3,8 @@
 import { FormEvent, useEffect, useState } from "react"
 import { X } from "lucide-react"
 import { Product } from "@/app/models/Product"
+import { useRouter } from "next/navigation"
+
 
 interface AddPopUpProps {
     product: Product;
@@ -11,10 +13,14 @@ interface AddPopUpProps {
 
 
 export default function AddToCartPopUp({product, on_close}:AddPopUpProps){
+    const router = useRouter()
     const [totalPrice, setTotalPrice] = useState<number>()
     const [alertMessage, setAlertMessage] = useState<string>("")
     const [quantityValue, setQuantityValue] = useState<number>()
-    
+    const [itemData, setItemData] = useState({
+        productId:"",
+        insertQuantity:"",
+    })
 
 
     useEffect(()=>{
@@ -34,24 +40,38 @@ export default function AddToCartPopUp({product, on_close}:AddPopUpProps){
 
     const handleAdd = async (e:FormEvent)=>{
        e.preventDefault()
-       try {
+       if(!quantityValue) {
+            setAlertMessage("Campo nao preenchido")
+       }else{
+        setItemData(
+        {
+            productId:String(product.id), 
+            insertQuantity:String(quantityValue)
+        })
+        try {
         const res = await fetch('/api/cart/add',{
             method:'POST',
             headers:{
                 "Content-Type":"application/json"
             },
-            credentials:"include"
+            credentials:"include",
+            body:JSON.stringify(itemData)
         })
-        if(!res.ok) {
-            console.log(res)
+        console.log(res.statusText)
+        if(res.status==401) {
+            router.replace("/pages/login")
+        }else{
+            setAlertMessage(res.statusText)
         }
        } catch (error) {
             console.log(error)
        }
+       }
+       
+
+       
     }
     
-    
-
     
 
 
@@ -59,11 +79,29 @@ export default function AddToCartPopUp({product, on_close}:AddPopUpProps){
         <div className="h-72 w-64  absolute left-[35rem] bg-red-500 flex  flex-col justify-center items-center">
             <X onClick={on_close} className="self-end mr-2 cursor-pointer"/>
                     <h1>Pop Up de Add</h1>
-                    <form onSubmit={(e)=>handleAdd(e)} className="flex flex-col p-5 gap-4 justify-center items-center">
-                            <input type="number" onChange={(e)=>setQuantityValue(Number(e.target.value))}/>
-                            <p>Quantidade em Estoque: {product?.storage}</p>
-                            <p>Preço Total: {totalPrice?.toFixed(2)}</p>
-                            <input type="submit" value="Adicionar" className="cursor-pointer bg-blue-500 p-2"/>
+                    <form 
+                    onSubmit={
+                        handleAdd
+                    } 
+                    className="flex flex-col p-5 gap-4 justify-center items-center"
+                    >
+                            <input 
+                            type="number" 
+                            onChange={
+                                (e)=>setQuantityValue(Number(e.target.value))
+                            }
+                            />
+                            <p>
+                                Quantidade em Estoque: {product?.storage}
+                            </p>
+                            <p>
+                                Preço Total: {totalPrice?.toFixed(2)}
+                            </p>
+                            <input 
+                            type="submit" 
+                            value="Adicionar" 
+                            className="cursor-pointer bg-blue-500 p-2"
+                            />
                             <p>{alertMessage}</p>
                     </form>
                     

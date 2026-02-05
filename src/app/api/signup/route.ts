@@ -3,7 +3,6 @@ import { pool } from "@/app/lib/mysql";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import bcrypt from "bcrypt"
 import { SignJWT } from "jose";
-import { error } from "console";
 
 
 

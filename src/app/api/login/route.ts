@@ -48,10 +48,9 @@ export async function POST(req:NextRequest) {
             
             return res
     } catch (error) {
-         return NextResponse.json({message:`Erro do servidor: ${error}`},{status:500})
+         return NextResponse.json({status:500},{statusText:`Erro do servidor: ${error}`})
     }
     }else{
-        console.log("SENHA ERRADA")
         return NextResponse.json({status:400},{statusText: "Credenciais Invalidas"})
     }
 }
